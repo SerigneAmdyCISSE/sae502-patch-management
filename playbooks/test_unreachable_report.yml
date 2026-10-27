@@ -1,0 +1,25 @@
+
+---
+- name: Tester la generation du rapport si la cible est inaccessible
+  hosts: targets
+  gather_facts: false
+  ignore_unreachable: true
+
+  tasks:
+    - name: Tester la connexion SSH
+      ansible.builtin.ping:
+      register: ping_result
+      ignore_unreachable: true
+
+    - name: Generer le rapport sur le controleur
+      ansible.builtin.copy:
+        dest: /workspace/reports/test-unreachable.md
+        content: |
+          # Rapport de test d'indisponibilite
+
+          - Cible : {{ inventory_hostname }}
+          - Etat : {% if ping_result.unreachable | default(false) %}BLOQUEE{% elif ping_result.failed | default(false) %}ECHEC{% else %}ACCESSIBLE{% endif %}
+          - Test realise par Ansible dans Docker Compose.
+      delegate_to: localhost
+      become: false
+

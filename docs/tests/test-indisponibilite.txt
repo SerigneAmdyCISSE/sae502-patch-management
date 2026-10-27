@@ -1,0 +1,13 @@
+
+PLAY [Tester la generation du rapport si la cible est inaccessible] ************
+
+TASK [Tester la connexion SSH] *************************************************
+fatal: [vm2-target]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.75.11 port 22: No route to host", "unreachable": true}
+...ignoring
+
+TASK [Generer le rapport sur le controleur] ************************************
+ok: [vm2-target -> localhost]
+
+PLAY RECAP *********************************************************************
+vm2-target                 : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+
