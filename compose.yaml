@@ -1,0 +1,12 @@
+services:
+  ansible:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sae502-ansible
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - /home/adminlab/.ssh/id_ed25519:/root/.ssh/id_ed25519:ro
+      - /home/adminlab/.ssh/known_hosts:/root/.ssh/known_hosts:ro
+    command: ["ansible", "--version"]
